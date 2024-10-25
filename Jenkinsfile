@@ -1,14 +1,17 @@
-pipeline{
-    agent any 
+pipeline {
+
+    agent any
+
     tools {
+        jdk 'jdk17'
         maven 'mvn3'
-        jdk    'jdk17'
-        docker 'Docker'
     }
-    stage('Checkout SCM') {
-        steps {
-            script{
-                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'git@github.com:mshow1980/Multitier_App_CI.git']])
+    stages {
+        stage('Checkout SCM'){
+            steps{
+                script{
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'git@github.com:mshow1980/Multitier_App_CI.git']])
+                }
             }
         }
     }

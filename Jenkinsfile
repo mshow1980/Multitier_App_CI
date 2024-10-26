@@ -4,7 +4,7 @@ pipeline {
 
     tools {
         jdk 'jdk17'
-        mvn 'mvn3'
+        maven 'mvn3'
     }
     environment {
         SCANNER_HOME = tool 'SonarQube_Scanner'

@@ -46,13 +46,6 @@ pipeline {
                 }
             }
         }
-        // stage('Trivy FIle Scan'){
-        //     steps{
-        //         script{
-        //             sh "trivy fs . > mikey.txt"
-        //         }
-        //     }
-        // }
         stage('SOnarQube Analysis'){
             steps{
                 script{

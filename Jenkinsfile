@@ -59,8 +59,8 @@ pipeline {
                     withSonarQubeEnv('SOnar-Token') {
                         sh ''' 
                         $SCANNER_HOME/bin/SonarQube_Scanner
-                        -Dsonar.projectName=Bankapp \
-                        -Dsonar.projectKey=Bankapp\
+                        -Dsonar.projectName=bankapp \
+                        -Dsonar.projectKey=bankapp\
                         -Dsonar.java.binaries=target
                         '''
                     }
@@ -71,7 +71,7 @@ pipeline {
             steps{
                 script{
                     withMaven(globalMavenSettingsConfig: 'maven_for_scion_scope', jdk: 'jdk17', maven: 'mvn3', mavenSettingsConfig: '', traceability: true) {
-                        sh 'mvn deploy'
+                        sh 'mvn deploy -DskipTests=true'
                     }
                 }
             }

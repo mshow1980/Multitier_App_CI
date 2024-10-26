@@ -49,7 +49,7 @@ pipeline {
         stage('Trivy FIle Scan'){
             steps{
                 script{
-                    sh " trivy fs --format table -o mikey.html ."
+                    sh " trivy fs . --format table -o mikey.html"
                 }
             }
         }
@@ -89,7 +89,7 @@ pipeline {
         stage('Docker Image Scan'){
             steps{
                 script{
-                   sh 'trivy image --format tabke -o image.html mshow1980/bankapp:${params.DOCKER_TAG}'
+                   sh "trivy image mshow1980/bankapp:${params.DOCKER_TAG} --format tabke -o image.html"
                 }
             }
         }

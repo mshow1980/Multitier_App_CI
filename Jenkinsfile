@@ -37,7 +37,7 @@ pipeline {
                 dependencyCheck additionalArguments: '''
                 -o "./"
                 -s "./"
-                -f "ALL
+                -f "ALL"
                 --prettyPrint"''', odcInstallation: 'OWASP_DC'
                 dependencyCheckPublisher pattern: 'report.xml'
                 }

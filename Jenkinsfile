@@ -2,7 +2,7 @@ pipeline {
 
     agent any
     parameters {
-        string(name: 'DOCKER_TAG', defaultValue: 'latest', 'Docker tag')
+        string(name: 'DOCKER_TAG', defaultValue: 'latest', description:'Docker tag')
     }
 
     tools {

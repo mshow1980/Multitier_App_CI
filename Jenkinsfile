@@ -6,7 +6,7 @@ pipeline {
         jdk 'jdk17'
         mvn 'mvn3'
     }
-    env {
+    environment {
         SCANNER_HOME = tool 'SonarQube_Scanner'
     }
     stages {
@@ -51,7 +51,7 @@ pipeline {
             }
         }
         stage('SOnarQube Analysis'){
-            stage{
+            steps{
                 script{
                     withSonarQubeEnv('SOnar-Token') {
                         sh ''' 

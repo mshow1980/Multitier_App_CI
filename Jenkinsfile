@@ -49,7 +49,7 @@ pipeline {
         stage('Trivy FIle Scan'){
             steps{
                 script{
-                    sh " trivy fs . --format table -o mikey.html"
+                    sh " trivy fs --format table -o mikey.html ."
                 }
             }
         }

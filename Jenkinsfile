@@ -1,6 +1,9 @@
 pipeline {
 
     agent any
+    parameters {
+        string(name: 'DOCKER_TAG', defaultValue: 'latest', 'Docker tag')
+    }
 
     tools {
         jdk 'jdk17'
@@ -39,7 +42,7 @@ pipeline {
                 -s "./"
                 -f "ALL"
                 --prettyPrint"''', odcInstallation: 'OWASP_DC'
-                dependencyCheckPublisher pattern: 'report.xml'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
                 }
             }
         }
@@ -61,6 +64,39 @@ pipeline {
                         -Dsonar.java.binaries=target
                         '''
                     }
+                }
+            }
+        }
+        stage('Building Artifect Deployment'){
+            steps{
+                script{
+                    withMaven(globalMavenSettingsConfig: 'maven_for_scion_scope', jdk: 'jdk17', maven: 'mvn3', mavenSettingsConfig: '', traceability: true) {
+                        sh 'mvn deploy'
+                    }
+                }
+            }
+        }
+        stage('Building Docker Image'){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'Docker-login', toolName: 'Docker') {
+                       sh 'docker build -t mshow1980/bankapp:${params.DOCKER_TAG} .'
+                       sh 'docker push  mshow1980/bankapp:${params.DOCKER_TAG}'
+                    }
+                }
+            }
+        }
+        stage('Docker Image Scan'){
+            steps{
+                script{
+                   sh 'trivy image --format tabke -o image.html mshow1980/bankapp:${params.DOCKER_TAG}'
+                }
+            }
+        }
+        stage('docker Image Push'){
+            steps{
+                script{
+                    sh 'docker push mshow1980/bankapp:${params.DOCKER_TAG}'
                 }
             }
         }
